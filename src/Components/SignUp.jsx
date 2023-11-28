@@ -28,9 +28,11 @@ const SignUp = () => {
   const [empty, setEmpty] = useState(false);
 
   const submit = () => {
-    if (signup.firstName || signup.surname === "") {
+    if (signup.firstName || signup.password === "") {
       setEmpty(true);
-    } else {
+    }
+
+    if (signup.firstName || signup.password !== "") {
       setEmpty(false);
     }
 
@@ -147,7 +149,7 @@ const SignUp = () => {
           )}
         </div>
         {passwordErrorOne ? (
-          <p className="passwordError">Password doesnt match</p>
+          <p className="passwordErrorOne">Password doesnt match</p>
         ) : null}
         <button onClick={submit} className="SignUpBtn">
           Sign Up
@@ -157,8 +159,8 @@ const SignUp = () => {
       <div>
         <img
           className="otherimg"
-          src="https://img.freepik.com/premium-vector/student-woman-with-laptop-studying-online-course-online-education-concept-vector-illustration-flat_186332-1147.jpg"
-          alt="A Lady studying with a Laptop"
+          src="https://img.freepik.com/free-vector/learning-concept-illustration_114360-6186.jpg?w=740&t=st=1701212723~exp=1701213323~hmac=b7eca25e579f284f1b761f94bc2a80b06c447dca1ef4c8b6977d5bacccaa74c4"
+          alt="A Boy studying with his book"
         />
       </div>
     </div>

@@ -105,8 +105,8 @@ const Hero = () => {
       <div>
         <img
           className="otherimg"
-          src="https://img.freepik.com/free-vector/business-man-working-hard-stock-financial-trade-market-diagram-vector-illustration-flat-design_1150-39773.jpg?w=740&t=st=1701080500~exp=1701081100~hmac=738a97dd7dfd5b246191c4420eaefef44143dc6e239d3de37afda4780a2aa7e1"
-          alt="A lady studying with a laptop"
+          src="https://img.freepik.com/free-vector/exams-concept-illustration_114360-2754.jpg?w=740&t=st=1701212835~exp=1701213435~hmac=83f6a9bbf254a7c10f9e37237d7f112b631fde562c58063f93afd0d562723800"
+          alt="A boy studying"
         />
       </div>
     </div>
