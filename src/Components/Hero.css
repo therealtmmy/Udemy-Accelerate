@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@600&display=swap');
+
+.Hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   margin-top: 6em;
+    gap: 6em;
+}
+
+
+.logo {
+    width: 6em;
+    height: 6em;
+    object-fit: contain;
+}
+
+
+
+h2 {
+    margin-bottom: -7px;
+}
+
+#EmailDiv {
+    border: 1px solid rgb(210, 204, 204);
+    padding:6px;
+    width: 19em;
+}
+
+.EmailError {
+    border: 1px solid red;
+}
+
+.PasswordError {
+    font-size: 12px;
+    margin-top: 3px;
+color: red
+}
+
+.mailError {
+    font-size: 12px;
+    margin-top: 3px;
+color: red
+}
+
+#PasswordDiv {
+    border: 1px solid rgb(210, 204, 204);
+    padding:6px;
+    width: 19em;
+    margin-top: 1em;
+    margin-bottom: 10px;
+}
+
+input {
+    margin-left: 10px;
+    outline: none;
+    border: none;
+    width: 19em;
+    background: white;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(1, 1, 119);
+    font-size: 13px;
+    font-family: 'Kumbh Sans', sans-serif;
+}
+
+.LoginBtn {
+    background-color: rgb(3, 3, 62);
+    border: none;
+    width: 24em;
+    color: white;
+    margin-top: 30px;
+    height: 2.7em;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Kumbh Sans', sans-serif;
+    margin-bottom: 20px;
+}
+
+button:hover {
+    background-color: #509CDB;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.otherimg {
+ 
+    width: 40em;
+    height: 35em;
+    object-fit: cover;
+    border-radius: 20px;
+}
