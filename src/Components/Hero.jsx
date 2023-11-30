@@ -49,6 +49,7 @@ const Hero = () => {
         if (userCredential) {
           setSuccessfulPassword(true);
           setInvalidPassword(false);
+          setEmailPassword("");
         }
       })
       .catch((error) => {

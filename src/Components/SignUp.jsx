@@ -60,6 +60,13 @@ const SignUp = () => {
       .then((userCredential) => {
         setCreated(true);
         setExisting(false);
+        setSignup({
+          firstName: "",
+          surname: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
         console.log(userCredential);
       })
       .catch((error) => {
@@ -92,6 +99,7 @@ const SignUp = () => {
         <h2>Create Account</h2>
         <p>It's quick and easy</p>
 
+        {/* Empty Input Field Error */}
         {empty ? (
           <div className="empty">
             <FontAwesomeIcon icon={faCircleExclamation} />
@@ -99,6 +107,7 @@ const SignUp = () => {
           </div>
         ) : null}
 
+        {/* Account Created Successfully Notification */}
         {created ? (
           <div className="created">
             <FontAwesomeIcon icon={faCircleCheck} />
@@ -106,6 +115,7 @@ const SignUp = () => {
           </div>
         ) : null}
 
+        {/* Existing Account Error */}
         {existing ? (
           <div className="empty">
             <FontAwesomeIcon icon={faCircleExclamation} />
@@ -173,16 +183,19 @@ const SignUp = () => {
           <p className="password">Password must be more than 6 characters</p>
         ) : null}
 
+        {/* WeakPassword Error */}
         {weakPassword ? (
           <p className="passwordError">
             Password must be more than 6 characters
           </p>
         ) : null}
 
+        {/* Missing Password Error */}
         {missingPassword ? (
           <p className="passwordError">Missing Password</p>
         ) : null}
 
+        {/* Password does not match error */}
         {passwordError ? (
           <p className="passwordError">Password does not match</p>
         ) : null}
