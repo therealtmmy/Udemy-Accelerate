@@ -7,6 +7,7 @@ import {
   faCircleUser,
   faEyeSlash,
   faEye,
+  faCircleCheck,
 } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 import { faLock, faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
@@ -26,10 +27,13 @@ const SignUp = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorOne, setPasswordErrorOne] = useState(false);
   const [hide, setHide] = useState(true);
-
+  const [created, setCreated] = useState(false);
   const [empty, setEmpty] = useState(false);
+  const [existing, setExisting] = useState(false);
+  const [weakPassword, setWeakPassword] = useState(false);
+  const [missingPassword, setMissingPassword] = useState(false);
 
-  const submit = (e) => {
+  const submit = () => {
     // Display Error
     if (signup.firstName || signup.password === "") {
       setEmpty(true);
@@ -43,6 +47,7 @@ const SignUp = () => {
       setHide(false);
       setPasswordErrorOne(true);
       setPasswordError(true);
+      setMissingPassword(false);
     } else {
       setHide(true);
       setPasswordError(false);
@@ -50,12 +55,33 @@ const SignUp = () => {
     }
 
     // Firebase Authentication
-    e.preventDefault();
+
     createUserWithEmailAndPassword(auth, signup.email, signup.password)
       .then((userCredential) => {
+        setCreated(true);
+        setExisting(false);
         console.log(userCredential);
       })
       .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          setExisting(true);
+          setWeakPassword(false);
+          setMissingPassword(false);
+        }
+
+        if (error.code === "auth/weak-password") {
+          setHide(false);
+          setWeakPassword(true);
+          setMissingPassword(false);
+          setExisting(false);
+        }
+
+        if (error.code === "auth/missing-password") {
+          setHide(false);
+          setWeakPassword(false);
+          setMissingPassword(true);
+          setExisting(false);
+        }
         console.log(error);
       });
   };
@@ -70,6 +96,20 @@ const SignUp = () => {
           <div className="empty">
             <FontAwesomeIcon icon={faCircleExclamation} />
             <p>Input Fields Cannot be Empty</p>
+          </div>
+        ) : null}
+
+        {created ? (
+          <div className="created">
+            <FontAwesomeIcon icon={faCircleCheck} />
+            <p>Account Successful. Please proceed to login</p>
+          </div>
+        ) : null}
+
+        {existing ? (
+          <div className="empty">
+            <FontAwesomeIcon icon={faCircleExclamation} />
+            <p>Account already exist</p>
           </div>
         ) : null}
 
@@ -132,8 +172,19 @@ const SignUp = () => {
         {hide ? (
           <p className="password">Password must be more than 6 characters</p>
         ) : null}
+
+        {weakPassword ? (
+          <p className="passwordError">
+            Password must be more than 6 characters
+          </p>
+        ) : null}
+
+        {missingPassword ? (
+          <p className="passwordError">Missing Password</p>
+        ) : null}
+
         {passwordError ? (
-          <p className="passwordError">Password doesnt match</p>
+          <p className="passwordError">Password does not match</p>
         ) : null}
 
         <div className="IconDiv">
@@ -162,7 +213,7 @@ const SignUp = () => {
           )}
         </div>
         {passwordErrorOne ? (
-          <p className="passwordErrorOne">Password doesnt match</p>
+          <p className="passwordErrorOne">Password does not match</p>
         ) : null}
         <button onClick={submit} className="SignUpBtn">
           Sign Up
