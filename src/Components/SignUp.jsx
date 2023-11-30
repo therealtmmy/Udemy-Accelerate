@@ -58,6 +58,9 @@ const SignUp = () => {
 
     createUserWithEmailAndPassword(auth, signup.email, signup.password)
       .then((userCredential) => {
+        setHide(false);
+        setWeakPassword(false);
+        setMissingPassword(false);
         setCreated(true);
         setExisting(false);
         setSignup({
