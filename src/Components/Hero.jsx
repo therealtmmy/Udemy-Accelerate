@@ -1,4 +1,6 @@
 import React from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 import { useState } from "react";
 import "./Hero.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,6 +8,7 @@ import {
   faEnvelope,
   faEyeSlash,
   faEye,
+  faCircleCheck,
 } from "@fortawesome/free-regular-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,12 +20,15 @@ const Hero = () => {
   const [showEmail, setShowEmail] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [unveil, setUnveil] = useState(false);
+  const [invalidPassword, setInvalidPassword] = useState(false);
+  const [successfulPassword, setSuccessfulPassword] = useState(false);
 
   const showPasscode = () => {
     setUnveil(!unveil);
   };
 
   const submit = () => {
+    // Display Error
     if (emailPassword.email || emailPassword.password === "") {
       setShowEmail(true);
       setShowPassword(true);
@@ -30,6 +36,30 @@ const Hero = () => {
       setShowEmail(false);
       setShowPassword(false);
     }
+
+    // Firebase Authentication
+
+    signInWithEmailAndPassword(
+      auth,
+      emailPassword.email,
+      emailPassword.password
+    )
+      .then((userCredential) => {
+        console.log(userCredential);
+        if (userCredential) {
+          setSuccessfulPassword(true);
+          setInvalidPassword(false);
+        }
+      })
+      .catch((error) => {
+        // Display Error
+        console.log(error);
+        if (emailPassword.password === "") {
+          return;
+        }
+        setInvalidPassword(true);
+        setSuccessfulPassword(false);
+      });
   };
 
   return (
@@ -45,10 +75,12 @@ const Hero = () => {
           <input
             type="email"
             placeholder="Email"
+            value={emailPassword.email}
             onChange={(e) =>
               setEmailPassword({ ...emailPassword, email: e.target.value })
             }
             onBlur={() => setShowEmail(true)}
+            autoComplete="on"
           />
         </div>
         {showEmail && emailPassword.email === "" ? (
@@ -60,6 +92,7 @@ const Hero = () => {
           <input
             type={unveil ? "text" : "password"}
             placeholder="Password"
+            value={emailPassword.password}
             onChange={(e) =>
               setEmailPassword({
                 ...emailPassword,
@@ -67,6 +100,7 @@ const Hero = () => {
               })
             }
             max={6}
+            autoComplete="on"
             onBlur={() => setShowPassword(true)}
           />
           {!unveil ? (
@@ -85,6 +119,19 @@ const Hero = () => {
         </div>
         {showPassword && emailPassword.password === "" ? (
           <p className="PasswordError">Password cannot be empty</p>
+        ) : null}
+
+        {/* Invalid Password */}
+        {invalidPassword ? (
+          <p className="PasswordError">Invalid Password or Email Address</p>
+        ) : null}
+
+        {/* Successful Password */}
+        {successfulPassword ? (
+          <div id="PasswordSuccessDiv">
+            {" "}
+            <p>Successful</p> <FontAwesomeIcon icon={faCircleCheck} />
+          </div>
         ) : null}
 
         <a href="">Forgot Password?</a>

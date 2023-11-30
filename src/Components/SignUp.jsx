@@ -1,4 +1,5 @@
 import React from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
@@ -10,6 +11,7 @@ import {
 import { useState } from "react";
 import { faLock, faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import "./SignUp.css";
+import { auth } from "../firebase";
 
 const SignUp = () => {
   const [signup, setSignup] = useState({
@@ -27,7 +29,8 @@ const SignUp = () => {
 
   const [empty, setEmpty] = useState(false);
 
-  const submit = () => {
+  const submit = (e) => {
+    // Display Error
     if (signup.firstName || signup.password === "") {
       setEmpty(true);
     }
@@ -45,6 +48,16 @@ const SignUp = () => {
       setPasswordError(false);
       setPasswordErrorOne(false);
     }
+
+    // Firebase Authentication
+    e.preventDefault();
+    createUserWithEmailAndPassword(auth, signup.email, signup.password)
+      .then((userCredential) => {
+        console.log(userCredential);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

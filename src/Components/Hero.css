@@ -37,6 +37,20 @@ h2 {
 color: red
 }
 
+#PasswordSuccessDiv {
+    display: flex;
+align-items: center;
+gap: 6px;
+margin-top: -15px;
+color: rgb(0, 218, 0)
+}
+
+#PasswordSuccessDiv > p {
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
 .mailError {
     font-size: 12px;
     margin-top: 3px;
