@@ -45,9 +45,11 @@ const SignUp = () => {
 
     if (signup.password !== signup.confirmPassword) {
       setHide(false);
+      setWeakPassword(false);
       setPasswordErrorOne(true);
       setPasswordError(true);
       setMissingPassword(false);
+      return;
     } else {
       setHide(true);
       setPasswordError(false);
@@ -56,9 +58,16 @@ const SignUp = () => {
 
     // Firebase Authentication
 
-    createUserWithEmailAndPassword(auth, signup.email, signup.password)
+    createUserWithEmailAndPassword(
+      auth,
+      signup.email,
+      signup.password,
+      signup.confirmPassword
+    )
       .then((userCredential) => {
-        setHide(false);
+        if (signup.password !== signup.confirmPassword) {
+          return;
+        } else setHide(false);
         setWeakPassword(false);
         setMissingPassword(false);
         setCreated(true);
@@ -70,6 +79,7 @@ const SignUp = () => {
           password: "",
           confirmPassword: "",
         });
+
         console.log(userCredential);
       })
       .catch((error) => {
